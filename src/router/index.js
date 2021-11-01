@@ -16,11 +16,53 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "/login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "/dashboard",
+    component: () => import("../views/Dashboard.vue"),
+    children: [
+      {
+        // path: 屬性值不可加 '/'
+        path: "products",
+        component: () => import("../views/Products.vue"),
+      },
+      {
+        path: "orders",
+        component: () => import("../views/Orders.vue"),
+      },
+      {
+        path: "coupons",
+        component: () => import("../views/Coupons.vue"),
+      },
+    ],
+  },
+  {
+    path: "/user",
+    component: () => import("../views/UserBoard.vue"),
+    children: [
+      {
+        path: "cart",
+        component: () => import("../views/UserCart.vue"),
+      },
+      {
+        path: "product/:productId",
+        component: () => import("../views/UserProduct.vue"),
+      },
+      {
+        path: "checkout/:orderId",
+        component: () => import("../views/UserCheckout.vue"),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  linkActiveClass: "active",
 });
 
 export default router;
